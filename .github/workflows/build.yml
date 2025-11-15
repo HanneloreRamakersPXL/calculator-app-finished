@@ -1,0 +1,30 @@
+name: Build Example
+on:
+  workflow_dispatch:
+
+jobs:
+  Task2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: use checkout
+        uses: actions/checkout@v4
+      - name: setup npm framework  
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: run npm install
+        run: npm install
+
+      - name: make zip
+        run: |
+         zip -r app-bundle.zip . \
+         -x ".git/*" \
+         -x ".github/*"
+        
+      - name: bundle the code in a zip
+        uses: actions/upload-artifact@v4
+        with: 
+          name: app-package
+          path: app-package.zip
+          
