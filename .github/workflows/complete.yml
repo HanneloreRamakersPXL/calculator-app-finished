@@ -27,4 +27,13 @@ jobs:
         with: 
           name: app-package
           path: app-bundle.zip
+
+      - name: unitest uitvoeren
+        run: npm test
+      - name: Test Report
+        uses: dorny/test-reporter@v2
+        with:
+          name: JUnit Test
+          path: target/surefire-reports/TEST-*.xml
+          reporter: java-junit
           
