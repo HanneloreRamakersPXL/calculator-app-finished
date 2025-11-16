@@ -39,3 +39,6 @@ jobs:
           name: unit-test-report
           path: test-report/unit-tests.txt
           
+      - name: Improved Test Reporter
+        uses: MichaelVoelkel/test-reporter@v1.8.0
+          
