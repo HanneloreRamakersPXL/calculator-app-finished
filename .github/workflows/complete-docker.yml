@@ -50,7 +50,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
+          file: ./Dockerfile2
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/my-app:latest
           
