@@ -40,7 +40,7 @@ jobs:
           path: test-report/unit-tests.txt
           
       - name: Debug username
-        run: echo "Username is: ${{ secrets.DOCKERHUB_USERNAME }}"
+        run: echo "Username is:${{ secrets.DOCKERHUB_USERNAME }}"
     
 
       - name: log into docker
