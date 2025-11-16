@@ -38,6 +38,10 @@ jobs:
         with:
           name: unit-test-report
           path: test-report/unit-tests.txt
+          
+      - name: Debug username
+        run: echo "Username is: ${{ secrets.DOCKERHUB_USERNAME }}"
+    
 
       - name: log into docker
         uses: docker/login-action@v3
