@@ -1,0 +1,35 @@
+name: Production Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-to-production:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # SSH naar AWS VM via marketplace action
+      - name: Connect to production server and deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PROD_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            echo "Pulling latest Docker image..."
+            docker pull jouwdockerhubnaam/jouwimage:latest
+
+            echo "Stopping running containers..."
+            docker stop calcapp || true
+            docker rm calcapp || true
+
+            echo "Starting new container on port 80..."
+            docker run -d \
+              --name calcapp \
+              -p 80:3000 \
+              jouwdockerhubnaam/jouwimage:latest
+
+            echo "Deployment completed!"
