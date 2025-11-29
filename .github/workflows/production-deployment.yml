@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "Pulling latest Docker image..."
-            docker pull jouwdockerhubnaam/jouwimage:latest
+            docker pull hanneloreramakerspxl/my-app:latest
 
             echo "Stopping running containers..."
             docker stop calcapp || true
@@ -30,6 +30,6 @@ jobs:
             docker run -d \
               --name calcapp \
               -p 80:3000 \
-              jouwdockerhubnaam/jouwimage:latest
+              hanneloreramakerspxl/my-app:latest
 
             echo "Deployment completed!"
