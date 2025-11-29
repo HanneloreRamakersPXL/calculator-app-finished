@@ -1,0 +1,33 @@
+name: Test Environment Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy-test:
+    runs-on: self-hosted
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      # 1. Pull latest image
+      - name: Pull latest Docker image
+        run: |
+          docker pull hanneloreramakerspxl/my-app:latest
+
+      # 2. Stop & remove running containers
+      - name: Stop running containers
+        run: |
+          CONTAINER_ID=$(docker ps -q --filter "ancestor=hanneloreramakerspxl/my-app:latest")
+          if [ ! -z "$CONTAINER_ID" ]; then
+            docker stop $CONTAINER_ID
+            docker rm $CONTAINER_ID
+          fi
+
+      # 3. Run the newest container
+      - name: Run new container
+        run: |
+          docker run -d -p 3000:3000 --name calculator-app hanneloreramakerspxl/my-app:latest
